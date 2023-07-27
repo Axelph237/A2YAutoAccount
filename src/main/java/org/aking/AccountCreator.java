@@ -1,4 +1,4 @@
-package org.example;
+package org.aking;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
