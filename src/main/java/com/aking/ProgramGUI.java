@@ -162,13 +162,15 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
      */
     private void initViewAccountPane()
     {
-        viewPane = new JPanel( new GridLayout(3, 0));
-        viewPane.add( new JLabel( "Accounts" ) );
+        viewPane = new JPanel( new GridLayout(5, 0));
+        viewPane.add( new JLabel( "Accounts:" ) );
         // Creates a dropdown menu
         viewAccounts = new JComboBox();
         viewAccounts.addItemListener(this);
 
         viewPassword = new JLabel("Password: ");
+
+        viewNotes = new JTextArea();
 
         // Populate dropdown
         for ( Object o : accountsData.getAccounts() )
@@ -180,6 +182,8 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
         // Adds the dropdown to the pane
         viewPane.add( viewAccounts );
         viewPane.add( viewPassword );
+        viewPane.add( new JLabel( "Notes:" ) );
+        viewPane.add(viewNotes);
     }
 
     @Override
@@ -295,6 +299,8 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
     private JTextField accountPrefix;
     // Input field for the user's email
     private JTextField email;
+    // Input field to add notes to an account
+    private JTextArea viewNotes;
     // Input field for the account's password
     private JPasswordField password;
     // Output pane for displaying iteration and date code
