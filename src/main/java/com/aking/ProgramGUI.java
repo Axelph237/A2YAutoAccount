@@ -38,6 +38,7 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
         createTabPane.add(accountTypePane);
         createTabPane.add(buttonsPane);
 
+
         initViewAccountPane();
 
         accountTabPane.add(viewPane);
