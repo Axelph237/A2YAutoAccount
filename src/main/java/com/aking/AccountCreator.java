@@ -65,8 +65,8 @@ public class AccountCreator {
         // Pause until card details are finalized
         waitForPageLoad(paymentURL);
 
-        
-        System.out.println("Account Creation Completed");
+        String username = accountData.getAccountPrefix() + accountData.getDateCode() + String.format("%02d", accountData.getNextIteration());
+        System.out.println("A2YAutoAccount: Completed creating account \"" + username + "\"");
     }
 
     /**
