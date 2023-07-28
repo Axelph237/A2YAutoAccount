@@ -35,7 +35,7 @@ public class AccountCreator {
 
     private void tearDown() {
         driver.quit();
-        System.out.println("A2YAutoAccount: Driver has been successfully disconnected");
+        System.out.println("A2YAutoAccount: Driver has been disconnected");
     }
 
     private void run() {
