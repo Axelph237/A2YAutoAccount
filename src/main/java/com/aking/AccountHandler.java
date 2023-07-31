@@ -50,6 +50,7 @@ public class AccountHandler {
         accountData.put("username", username);
         accountData.put("password", password);
         accountData.put("accountType", accountType);
+        accountData.put("notes","");
 
         fileData.add( accountData );
 
@@ -69,6 +70,17 @@ public class AccountHandler {
         fileData.remove( index );
 
         return true;
+    }
+
+    /**
+     * Sets the notes of the specified account
+     * @param index index of the account in the account array
+     * @param text the text to set the notes to
+     */
+    public void setNotes( int index, String text )
+    {
+        JSONObject account = (JSONObject)fileData.get(index);
+        account.put("notes", text);
     }
 
     /**
