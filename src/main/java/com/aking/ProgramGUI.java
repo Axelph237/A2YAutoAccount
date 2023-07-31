@@ -20,7 +20,7 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
 
         JPanel createTabPane = new JPanel();
         JPanel accountTabPane = new JPanel();
-        accountTabPane.setLayout( new BoxLayout(accountTabPane, BoxLayout.PAGE_AXIS));
+        accountTabPane.setLayout( new GridLayout(2, 1));
 
         this.setPreferredSize(new Dimension(350, 350));
         //this.setLayout( new GridLayout(6, 0) );
@@ -166,7 +166,7 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
     private void initViewAccountPane()
     {
         viewPane = new JPanel();
-        viewPane.setLayout( new BoxLayout( viewPane, BoxLayout.Y_AXIS ));
+        viewPane.setLayout( new FlowLayout(FlowLayout.CENTER));
         viewPane.add( new JLabel( "Accounts:" ) );
         // Creates a dropdown menu
         viewAccounts = new JComboBox();
@@ -187,6 +187,11 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
         viewPane.add( viewPassword );
     }
 
+    /**
+     * Initializes the Notes pane, creating a
+     * text box for the user to write notes in,
+     * and a button for them to save the notes
+     */
     private void initNotesPane()
     {
         notesPane = new JPanel();
@@ -204,7 +209,9 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
 
         notesPane.add( new JLabel("Notes: ") );
         notesPane.add(notes);
-        notesPane.add(saveNotesButton);
+        JPanel savePanel = new JPanel( new FlowLayout(FlowLayout.LEFT));
+        savePanel.add(saveNotesButton);
+        notesPane.add( savePanel );
     }
 
     @Override
