@@ -80,7 +80,7 @@ public class AccountCreator {
     {
         String account = accountData.getAccountPrefix();
         String accountCode = accountData.getDateCode() + String.format("%02d", accountData.getNextIteration());
-        String emailPrefix = addPrefix ? account + accountData.getEmailPrefix() : accountData.getEmailPrefix();
+        String emailPrefix = accountData.getEmailPrefix();
         String emailSuffix = accountData.getEmailSuffix();
         
         // Accesses the First Name field
@@ -90,7 +90,8 @@ public class AccountCreator {
         // Types the account code into the Last Name field
         driver.findElement(By.id("LastName")).sendKeys( accountCode );
         // Types the edited email into the Email field
-        driver.findElement(By.id("Email")).sendKeys(emailPrefix + "+" + accountCode + "@" + emailSuffix);
+        String prefix = addPrefix ? account : "";
+        driver.findElement(By.id("Email")).sendKeys(emailPrefix + "+" + prefix + accountCode + "@" + emailSuffix);
         // Types the account name and code into the Username field
         driver.findElement(By.id("username")).sendKeys(account + accountCode);
         // Types the password into the Password field
