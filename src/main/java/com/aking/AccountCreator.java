@@ -2,20 +2,22 @@ package com.aking;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 
 public class AccountCreator {
     private WebDriver driver;
     private OptionsHandler accountData;
     private int planID;
+    private boolean addPrefix;
 
     /**
      * Main public implementation method. Executes necessary steps for Selenium in proper order.
      * @param data the DataHandler containing the data necessary for this to run.
      * @param planID the numeric ID representing the account type to be created.
      */
-    public void createAccount(OptionsHandler data, int planID )
+    public void createAccount(OptionsHandler data, int planID, boolean addPrefix )
     {
-        setUp( data, planID );
+        setUp( data, planID, addPrefix );
 
         try
         {
@@ -27,10 +29,11 @@ public class AccountCreator {
         }
     }
 
-    private void setUp(OptionsHandler data, int plan ) {
-        driver = new ChromeDriver();
+    private void setUp(OptionsHandler data, int plan, boolean prefix ) {
+        driver = new EdgeDriver();
         accountData = data;
         planID = plan;
+        addPrefix = prefix;
     }
 
     private void tearDown() {
@@ -66,7 +69,7 @@ public class AccountCreator {
         // Pause until card details are finalized
         waitForPageLoad(paymentURL);
 
-        String username = accountData.getAccountPrefix() + accountData.getDateCode() + String.format("%02d", accountData.getNextIteration());
+        String username = accountData.getAccountPrefix() + accountData.getDateCode() + String.format("%02d", accountData.getNextIteration() - 1);
         System.out.println("A2YAutoAccount: Completed creating account \"" + username + "\"");
     }
 
@@ -77,7 +80,7 @@ public class AccountCreator {
     {
         String account = accountData.getAccountPrefix();
         String accountCode = accountData.getDateCode() + String.format("%02d", accountData.getNextIteration());
-        String emailPrefix = accountData.getEmailPrefix();
+        String emailPrefix = addPrefix ? account + accountData.getEmailPrefix() : accountData.getEmailPrefix();
         String emailSuffix = accountData.getEmailSuffix();
         
         // Accesses the First Name field
@@ -117,7 +120,7 @@ public class AccountCreator {
     private void runPaymentPage()
     {
         // Switches to the Stripe card info iFrame
-        driver.switchTo().frame(driver.findElement(By.xpath("/html/body/div[1]/div/div/div[1]/form/div[3]/div/div[1]/div/iframe")));
+        driver.switchTo().frame(driver.findElement(By.xpath("/html/body/div[1]/div/div/div[1]/form/div[4]/div/div[1]/div/iframe")));
         // Clicks and then types in the card number into the Stripe card info box
         WebElement cardNumber = driver.findElement(By.name("cardnumber"));
         cardNumber.click();
@@ -128,7 +131,7 @@ public class AccountCreator {
         driver.findElement(By.name("postal")).sendKeys("42424");
         // Returns to the default frame of the page and then clicks the "Continue" button
         driver.switchTo().defaultContent();
-        driver.findElement(By.xpath("/html/body/div[1]/div/div/div[1]/form/div[5]/div[2]/button")).click();
+        driver.findElement(By.xpath("//button")).click();
     }
 
     /**

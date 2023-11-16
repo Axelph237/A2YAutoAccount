@@ -5,7 +5,6 @@ public class Main {
         OptionsHandler options = new OptionsHandler();
         AccountHandler accounts = new AccountHandler( options );
 
-
         ProgramGUI gui = new ProgramGUI("Account Specifications", options, accounts);
     }
 }

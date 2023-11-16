@@ -174,6 +174,7 @@ public class OptionsHandler {
 
     /**
      * Iterates the current integer count of accounts created today. If new day, sets to 1.
+     * @return the new iteration value
      */
     public int iterateCount()
     {
@@ -193,6 +194,24 @@ public class OptionsHandler {
             fileData.put("iterations", nextIteration);
             return nextIteration;
         }
+    }
+
+    /**
+     * Deiterates the current iteration by 1. Used for artificially decreasing the iteration count.
+     * Minimum value is 1.
+     * @return the new iteration
+     */
+    public int deiterateCount()
+    {
+        int currIteration = Integer.valueOf(fileData.get("iterations").toString());
+
+        if(currIteration < 1)
+            return currIteration;
+
+        int nextIteration = currIteration - 1;
+
+        fileData.put("iterations", nextIteration);
+        return nextIteration;
     }
 
     /**

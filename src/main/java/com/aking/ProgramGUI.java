@@ -28,6 +28,7 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
         initInfoPane();
         initAccountPane();
         initEmailPane();
+        initCheckBoxPane();
         initPasswordPane();
         initTypePane();
         initButtonPane();
@@ -35,6 +36,7 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
         createTabPane.add(infoPane);
         createTabPane.add(accountPrePane);
         createTabPane.add(emailPane);
+        createTabPane.add(checkBoxPane);
         createTabPane.add(passwordPane);
         createTabPane.add(accountTypePane);
         createTabPane.add(buttonsPane);
@@ -70,7 +72,12 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
         iterationCount.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                optionsData.iterateCount();
+
+                if (e.getButton() == 1) // If Mouse 1 has been clicked
+                    optionsData.iterateCount();
+                else
+                    optionsData.deiterateCount();
+
                 iterationCount.setText( "Next Iteration: " + String.format("%02d", optionsData.getNextIteration() ) );
             }
             @Override
@@ -110,6 +117,17 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
         email = new JTextField( optionsData.getEmailPrefix() + "@" + optionsData.getEmailSuffix() );
         email.setPreferredSize( new Dimension( 250, 25 ) );
         emailPane.add( email );
+    }
+
+    /**
+     * Initializes the Email pane, requesting
+     * input from the user for the email
+     */
+    private void initCheckBoxPane()
+    {
+        checkBoxPane = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        prefixBox = new JCheckBox("Add prefix to email id");
+        checkBoxPane.add( prefixBox );
     }
 
     /**
@@ -245,7 +263,7 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
             accountsData.saveToFile();
             viewAccounts.addItem( new MenuItem( account.get("username") + "  (" + account.get("accountType") + ")", account));
 
-            ac.createAccount(optionsData, getPlanID( accountType.getSelectedItem() ) );
+            ac.createAccount(optionsData, getPlanID( accountType.getSelectedItem() ), addPrefix );
 
             saveData();
 
@@ -271,12 +289,24 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        MenuItem item = (MenuItem)e.getItem();
+        Object source = e.getSource();
 
-        viewPassword.setText( "Password: " + item.data.get("password") );
+        if (source == viewAccounts)
+        {
+            MenuItem item = (MenuItem)e.getItem();
 
-        if( notes != null)
-            notes.setText( (String)item.data.get("notes") );
+            viewPassword.setText( "Password: " + item.data.get("password") );
+
+            if( notes != null)
+                notes.setText( (String)item.data.get("notes") );
+        }
+        else if (source == prefixBox)
+        {
+            if (e.getStateChange() == ItemEvent.SELECTED)
+                addPrefix = true;
+            else
+                addPrefix = false;
+        }
     }
 
     /**
@@ -341,12 +371,16 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
     private JTextArea notes;
     // Input field for the account's password
     private JPasswordField password;
+    // Check box for adding prefix to email
+    private JCheckBox prefixBox;
     // Output pane for displaying iteration and date code
     private JPanel infoPane;
     // Pane for the account prefix
     private JPanel accountPrePane;
     // Pane for the email
     private JPanel emailPane;
+    // Pane for the check box
+    private JPanel checkBoxPane;
     // Pane for the account type
     private JPanel accountTypePane;
     // Pane for the buttons
@@ -363,6 +397,8 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
     private JLabel iterationCount;
     // Label for viewing selected account password
     private JLabel viewPassword;
+    // Whether or not to add the username prefix to the email
+    private boolean addPrefix = false;
     // The DataHandler to manage data pulled to and from files and/or
     // its internal JSON Object
     final private OptionsHandler optionsData;
