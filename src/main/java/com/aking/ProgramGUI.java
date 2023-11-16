@@ -127,6 +127,7 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
     {
         checkBoxPane = new JPanel(new FlowLayout(FlowLayout.LEFT));
         prefixBox = new JCheckBox("Add prefix to email id");
+        prefixBox.addItemListener(this);
         checkBoxPane.add( prefixBox );
     }
 
@@ -397,7 +398,7 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
     private JLabel iterationCount;
     // Label for viewing selected account password
     private JLabel viewPassword;
-    // Whether or not to add the username prefix to the email
+    // Whether to add the username prefix to the email
     private boolean addPrefix = false;
     // The DataHandler to manage data pulled to and from files and/or
     // its internal JSON Object
