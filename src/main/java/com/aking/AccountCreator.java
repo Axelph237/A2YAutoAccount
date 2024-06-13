@@ -127,7 +127,7 @@ public class AccountCreator {
         cardNumber.click();
         cardNumber.sendKeys("4242 4242 4242 4242");
         // Types all other card data into the Stripe card info box
-        driver.findElement(By.name("exp-date")).sendKeys("04 / 24");
+        driver.findElement(By.name("exp-date")).sendKeys("04 / 50");
         driver.findElement(By.name("cvc")).sendKeys("242");
         driver.findElement(By.name("postal")).sendKeys("42424");
         // Returns to the default frame of the page and then clicks the "Continue" button

@@ -321,19 +321,19 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
 
         switch ( selectedType ) {
             case "Individual":
-                planID = 25;
+                planID = 35;
                 break;
             case "Family":
-                planID = 27;
+                planID = 37;
                 break;
             case "Advocate":
-                planID = 28;
+                planID = 41;
                 break;
             case "Mentor":
-                planID = 29;
+                planID = 42;
                 break;
             case "Organization":
-                planID = 30;
+                planID = 40;
                 break;
             default:
                 break;
