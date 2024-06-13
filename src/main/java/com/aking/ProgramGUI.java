@@ -303,10 +303,7 @@ public class ProgramGUI extends JFrame implements ActionListener, ItemListener {
         }
         else if (source == prefixBox)
         {
-            if (e.getStateChange() == ItemEvent.SELECTED)
-                addPrefix = true;
-            else
-                addPrefix = false;
+            addPrefix = e.getStateChange() == ItemEvent.SELECTED;
         }
     }
 
